@@ -1,6 +1,7 @@
 #' @rdname cate_nelson
 #' @export
-cate_nelson_x <- function(x, y, n_group = 2, min_group = 2){
+#'   
+cate_nelson_x <- function(x, y, n_group = 2, min_group = 2, min_crit = NULL, max_crit = NULL){
   #Order dataset by x
   i <- order(x)
   x <- x[i]
@@ -11,8 +12,11 @@ cate_nelson_x <- function(x, y, n_group = 2, min_group = 2){
   if(min_group < 2){
     stop("The mininum of different values per group must be at least 2 for x partitioning")
   }
-  division  <- group_division(x, n_group, min_group = min_group)
-  group     <- group_matrix(n, division)
+  ##Generate possible divisions, with constraints
+  division  <- group_division(x, n_group, min_group = min_group, min_crit = min_crit, max_crit = max_crit)
+ 
+  ##Generate selection matrices from divisions
+  group <- group_matrix(n, division)
   S <- group_selection_matrices(group)
 
   #Compute sum of squares (RSS = residual, E = explained, T = total) and R2

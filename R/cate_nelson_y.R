@@ -1,6 +1,6 @@
 #' @rdname cate_nelson
 #' @export
-cate_nelson_y <- function(y, group_x, min_group = 1, trend = "positive"){
+cate_nelson_y <- function(y, group_x, min_group = 1, min_crit = NULL, max_crit = NULL, trend = "positive"){
   #Order dataset by x
   i <- order(y)
   y <- y[i]
@@ -10,8 +10,11 @@ cate_nelson_y <- function(y, group_x, min_group = 1, trend = "positive"){
   n_group <- group_nb(group_x)
 
   #Generate possible partitions and associated selection matrices
+  ##Generate possible divisions, with constraints
   n <- length(y)
-  division  <- group_division(y, n_group, min_group = min_group)
+  division  <- group_division(y, n_group, min_group = min_group, min_crit = min_crit, max_crit = max_crit)
+
+  ##Generate group matrices from divisions
   group_y <- group_matrix(n, division)
 
   #Compute the number of elements in each quadrat

@@ -13,6 +13,7 @@ In particular, the function \code{cateNelson} from the \code{rcompanion} package
 (1) be quicker,
 (2) allow to divide data into more than two groups (as proposed in Cate and Nelson (1971)) and
 (3) accept constraints on the minimal number of different values in each group.
+(4) accept constraints on the minimum and maximum critical values in \code{x} and \code{y}.
 \cr\cr
 The package also corrects for minor inconvenients of the original function such as the inability to handle repeated measures on extremities of the \code{x} vector and also provides the graph as a \code{ggplot2} object, which can be further manipulated.
 Most functionalities and output have been retained from the original function; names of parameters and output might however differ, and now follow the underscore separated naming convention.

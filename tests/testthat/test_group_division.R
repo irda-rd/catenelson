@@ -75,11 +75,20 @@ test_that("case with too large min_group for the data return appropriate error",
   expect_error(group_division(x, n_group = n_group, min_group = min_group), msg)
 })
 #--------------------------------------------------------------------
-test_that("case with no solution return the appropriate error", {
+test_that("case with no solution return the appropriate error (min_group)", {
   x <- 100*c(1:3, 3, 3:5)
   n_group = 3
   min_group = 2
   msg <- "no group division meet the conditions imposed"
   expect_error(group_division(x, n_group = n_group, min_group = min_group), msg)
+  })
+#--------------------------------------------------------------------
+test_that("case with no solution return the appropriate error (min_crit, max_crit)", {
+  x <- sample(1:100, 10)
+  n_group = 3
+  min_group = 2
+  msg <- "no group division meet the conditions imposed"
+  expect_error(group_division(x, n_group = n_group, min_group = min_group, max_crit = c(0)), msg)
+  expect_error(group_division(x, n_group = n_group, min_group = min_group, min_crit = c(101)), msg)
 })
 #--------------------------------------------------------------------

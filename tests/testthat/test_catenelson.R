@@ -53,6 +53,10 @@ test_that("the function does not generate error when using various parameters", 
   crit_y_index = 3
   min_group_x = 5
   min_group_y = 5
+  min_crit_x = c(-1,-1)
+  max_crit_x = c(1,1)
+  min_crit_y = c(-1,-1)
+  max_crit_y = c(1,1)
   x_lab = "test_x_lab"
   y_lab = "test_y_lab"
   legend = "none"
@@ -61,6 +65,7 @@ test_that("the function does not generate error when using various parameters", 
   expect_error(cate_nelson(x, y, label = label,
                            n_group = n_group, crit_x_index = crit_x_index, crit_y_index = crit_y_index, trend = trend,
                            min_group_x = min_group_x, min_group_y = min_group_y,
+                           min_crit_x = min_crit_x, min_crit_y = min_crit_y, max_crit_x = max_crit_x, max_crit_y = max_crit_y,
                            details = TRUE, details_prop = 1,
                            x_lab = x_lab, y_lab = y_lab, legend = legend),
                regexp = NA)

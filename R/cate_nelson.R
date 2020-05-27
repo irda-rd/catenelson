@@ -8,6 +8,7 @@
 #' @param crit_x_index,crit_y_index \code{integer}, the index of the partition to select. The default value (\code{crit_x_index = 1} or \code{crit_y_index = 1}) correspond to the best partition, see the \code{details} section.
 #' @param trend \code{character}, the expected trend of the data, either \code{positive} or \code{negative}.
 #' @param min_group_x,min_group_y \code{integer}, the minimum number of different values in each group for the x and y partitioning; \code{min_group_x} must be at least two, \code{min_group_y} can be one.
+#' @param min_crit_x,min_crit_y,max_crit_x,max_crit_y \code{numeric} vectors of length \code{n_group-1}, optional inequality constraints on each critical values in \code{x} and \code{y} \code{(min <= x <= max)}. The default value is \code{NULL} and represent no constraint.
 #' @param details \code{logical} indicating if details about partitioning in x and y should be provided in the output.
 #' @param details_prop \code{numeric}, indicating the proportion of the total partition to show in the output (between 0 and 1), used if \code{details = TRUE}.
 #' @param x_lab,y_lab,legend \code{character} specifying graphical options, repectively: the name of the x-axis, the name of the y-axis and the position of the legend (\code{none} to remove, look into \code{ggplot2} options).
@@ -28,7 +29,7 @@
 #' \item Cramer's V and Ficher's p values associated with the contingency table formed by the quadrats are also calculated as supplementary information. The actual package sort partition in decreasing order of Cramer's V for a same number of point in the diagonal quadrats.
 #' }
 #' As allowed in the \code{rcompanion} package, one can select the ith best partition in x (\code{crit_x_index}) and in y (\code{crit_y_index}).
-#' In both partitioning, one can impose additional constraint on the minimum number of distinct values per group through \code{min_group_x} and \code{min_group_y}.
+#' In both partitioning, one can impose additional constraint on the minimum number of distinct values per group through \code{min_group_x} and \code{min_group_y}. Additional constraints can also be defined on the range of critical values in \code{x} or \code{y} through the parameters \code{min_crit_x}, \code{min_crit_y}, \code{max_crit_x}, \code{max_crit_y}.
 #' \cr\cr
 #' Quadrat names are defined as \code{ij} with \code{i} the index along the x-axis and \code{j} the index along the y-axis. The number of groups has been restricted to a maximum of 10 to avoid ambiguities with the quadrat names, and its repercussion when counting the number of points. The code might be improve in the future to allow a greater number of groups, but the constraint is not likely to be reached because covering all possible partitions would then require a considerable time to compute.
 #' \cr\cr
@@ -68,6 +69,7 @@
 cate_nelson <- function(x, y, label = NULL,
                         n_group, crit_x_index = 1, crit_y_index = 1, trend = "positive",
                         min_group_x = 2, min_group_y = 1,
+                        min_crit_x = NULL, min_crit_y = NULL, max_crit_x = NULL, max_crit_y = NULL,
                         details = TRUE, details_prop = 1,
                         x_lab = "X", y_lab = "Y", legend = "bottom"){
   #Check for the maximum number of group (10)
@@ -77,7 +79,7 @@ cate_nelson <- function(x, y, label = NULL,
 
   #Partition in x
   ##Compute R2 for each partition in x
-  cn_x <- cate_nelson_x(x, y, n_group = n_group, min_group = min_group_x)
+  cn_x <- cate_nelson_x(x, y, n_group = n_group, min_group = min_group_x, min_crit = min_crit_x, max_crit = max_crit_x)
 
   ##Selecting the best (or chosen) partition according to x (maximise R2)
   df_x <- cn_x$df[crit_x_index,]
@@ -85,7 +87,7 @@ cate_nelson <- function(x, y, label = NULL,
 
   #Partition in y
   ##Given the partition in x, compute the number of points in each quadrat, defined by y partition
-  cn_y <- cate_nelson_y(y, group_x, min_group = min_group_y, trend = trend)
+  cn_y <- cate_nelson_y(y, group_x, min_group = min_group_y, min_crit = min_crit_y, max_crit = max_crit_y, trend = trend)
 
   #Selecting the best (or chosen) partition in y (maximise the number of point in the predicted quadrats)
   df_y <- cn_y$df[crit_y_index,]
@@ -108,7 +110,7 @@ cate_nelson <- function(x, y, label = NULL,
   object <- list()
   ##Details
   if(details){
-    index <- seq_len(round(details_prop*nrow(cn_x$df)))
+    index <- seq_len(round(details_prop * nrow(cn_x$df)))
     object$x_partition <- cn_x$df[index,]
     object$y_partition <- cn_y$df[index,]
   }else{
@@ -120,8 +122,6 @@ cate_nelson <- function(x, y, label = NULL,
   rownames(object$model) <- NULL
   object$group <- df_group
   object$graph <- graph
-
-  #Note: more than one
 
   return(object)
 }
