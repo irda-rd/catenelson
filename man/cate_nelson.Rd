@@ -50,6 +50,7 @@ The function return a \code{list} with the following elements:
 \item{\code{model}}{the selected partitions in x and y and their statistics (\code{data.frame}).}
 \item{\code{group}}{the group in x and y, to which each point belong according to the \code{model}'s partition (\code{data.frame}).}
 \item{\code{graph}}{a \code{ggplot2} object representing the points and the quadrats, delimited by the critical values of the \code{model}. Empty circles correspond to points falling outside the diagonal quadrats, while full circles represent points within. Color can be added through \code{label}.}
+\item{\code{param}}{a \code{list} of the entry parameters that characterize the analysis.}
 }
 }
 \description{
@@ -96,7 +97,7 @@ CN$y_partition
 CN$model
 CN$group
 CN$graph
-
+CN$param
 }
 \references{
 Cate RB, Nelson LA. 1971. A simple statistical procedure for partitioning soil test correlation data into two classes. Soil. Sci. Soc. Amer. Proc. 35: 658-660.

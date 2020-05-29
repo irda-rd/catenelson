@@ -43,6 +43,7 @@
 #' \item{\code{model}}{the selected partitions in x and y and their statistics (\code{data.frame}).}
 #' \item{\code{group}}{the group in x and y, to which each point belong according to the \code{model}'s partition (\code{data.frame}).}
 #' \item{\code{graph}}{a \code{ggplot2} object representing the points and the quadrats, delimited by the critical values of the \code{model}. Empty circles correspond to points falling outside the diagonal quadrats, while full circles represent points within. Color can be added through \code{label}.}
+#' \item{\code{param}}{a \code{list} of the entry parameters that characterize the analysis.}
 #' }
 #' @references
 #' Cate RB, Nelson LA. 1971. A simple statistical procedure for partitioning soil test correlation data into two classes. Soil. Sci. Soc. Amer. Proc. 35: 658-660.
@@ -65,7 +66,7 @@
 #' CN$model
 #' CN$group
 #' CN$graph
-#'
+#' CN$param
 cate_nelson <- function(x, y, label = NULL,
                         n_group, crit_x_index = 1, crit_y_index = 1, trend = "positive",
                         min_group_x = 2, min_group_y = 1,
@@ -117,6 +118,19 @@ cate_nelson <- function(x, y, label = NULL,
     object$x_partition <- NULL
     object$y_partition <- NULL
   }
+  ##Entry parameters
+  object$param <- list(
+    n_group = n_group,
+    crit_x_index = crit_x_index,
+    crit_y_index = crit_y_index,
+    trend = trend,
+    min_group_x = min_group_x,
+    min_group_y = min_group_y,
+    min_crit_x = min_crit_x,
+    min_crit_y = min_crit_y,
+    max_crit_x = max_crit_x,
+    max_crit_y = max_crit_y)
+  
   ##Final model and graph
   object$model <- cbind(df_x, df_y)
   rownames(object$model) <- NULL
