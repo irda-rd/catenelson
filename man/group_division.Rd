@@ -4,7 +4,7 @@
 \alias{group_division}
 \title{Group division}
 \usage{
-group_division(x, n_group, min_group)
+group_division(x, n_group, min_group, min_crit = NULL, max_crit = NULL)
 }
 \arguments{
 \item{x}{\code{numeric}, an ordered vector of elements.}
@@ -12,6 +12,8 @@ group_division(x, n_group, min_group)
 \item{n_group}{\code{integer}, the number of groups (minimum 2).}
 
 \item{min_group}{\code{integer}, the minimum number of values in each group (not elements).}
+
+\item{min_crit, max_crit}{\code{numeric} vectors of length corresponding to the number of group (number of rows of \code{division}) minus one, representing inequality constraints on each critical values in \code{x} \code{(min <= x <= max)}. The default value is \code{NULL} and represent no constraint.}
 }
 \value{
 Return a \code{matrix} of position that define new groups (divisions). Rows represent the \code{n_group - 1} divisions for a given partition, while columns represent different partitions.

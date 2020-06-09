@@ -9,12 +9,15 @@
 \usage{
 cate_nelson(x, y, label = NULL, n_group, crit_x_index = 1,
   crit_y_index = 1, trend = "positive", min_group_x = 2,
-  min_group_y = 1, details = TRUE, details_prop = 1, x_lab = "X",
-  y_lab = "Y", legend = "bottom")
+  min_group_y = 1, min_crit_x = NULL, min_crit_y = NULL,
+  max_crit_x = NULL, max_crit_y = NULL, details = TRUE,
+  details_prop = 1, x_lab = "X", y_lab = "Y", legend = "bottom")
 
-cate_nelson_x(x, y, n_group = 2, min_group = 2)
+cate_nelson_x(x, y, n_group = 2, min_group = 2, min_crit = NULL,
+  max_crit = NULL)
 
-cate_nelson_y(y, group_x, min_group = 1, trend = "positive")
+cate_nelson_y(y, group_x, min_group = 1, min_crit = NULL,
+  max_crit = NULL, trend = "positive")
 }
 \arguments{
 \item{x}{\code{numeric} vector of a predictor variable (e.g. nutrient concentration).}
@@ -31,6 +34,8 @@ cate_nelson_y(y, group_x, min_group = 1, trend = "positive")
 
 \item{min_group_x, min_group_y}{\code{integer}, the minimum number of different values in each group for the x and y partitioning; \code{min_group_x} must be at least two, \code{min_group_y} can be one.}
 
+\item{min_crit_x, min_crit_y, max_crit_x, max_crit_y}{\code{numeric} vectors of length \code{n_group-1}, optional inequality constraints on each critical values in \code{x} and \code{y} \code{(min <= x <= max)}. The default value is \code{NULL} and represent no constraint.}
+
 \item{details}{\code{logical} indicating if details about partitioning in x and y should be provided in the output.}
 
 \item{details_prop}{\code{numeric}, indicating the proportion of the total partition to show in the output (between 0 and 1), used if \code{details = TRUE}.}
@@ -45,6 +50,7 @@ The function return a \code{list} with the following elements:
 \item{\code{model}}{the selected partitions in x and y and their statistics (\code{data.frame}).}
 \item{\code{group}}{the group in x and y, to which each point belong according to the \code{model}'s partition (\code{data.frame}).}
 \item{\code{graph}}{a \code{ggplot2} object representing the points and the quadrats, delimited by the critical values of the \code{model}. Empty circles correspond to points falling outside the diagonal quadrats, while full circles represent points within. Color can be added through \code{label}.}
+\item{\code{param}}{a \code{list} of the entry parameters that characterize the analysis.}
 }
 }
 \description{
@@ -68,7 +74,7 @@ The function reproduces the approach used in the \code{rcompanion} package, in w
 \item Cramer's V and Ficher's p values associated with the contingency table formed by the quadrats are also calculated as supplementary information. The actual package sort partition in decreasing order of Cramer's V for a same number of point in the diagonal quadrats.
 }
 As allowed in the \code{rcompanion} package, one can select the ith best partition in x (\code{crit_x_index}) and in y (\code{crit_y_index}).
-In both partitioning, one can impose additional constraint on the minimum number of distinct values per group through \code{min_group_x} and \code{min_group_y}.
+In both partitioning, one can impose additional constraint on the minimum number of distinct values per group through \code{min_group_x} and \code{min_group_y}. Additional constraints can also be defined on the range of critical values in \code{x} or \code{y} through the parameters \code{min_crit_x}, \code{min_crit_y}, \code{max_crit_x}, \code{max_crit_y}.
 \cr\cr
 Quadrat names are defined as \code{ij} with \code{i} the index along the x-axis and \code{j} the index along the y-axis. The number of groups has been restricted to a maximum of 10 to avoid ambiguities with the quadrat names, and its repercussion when counting the number of points. The code might be improve in the future to allow a greater number of groups, but the constraint is not likely to be reached because covering all possible partitions would then require a considerable time to compute.
 \cr\cr
@@ -91,7 +97,7 @@ CN$y_partition
 CN$model
 CN$group
 CN$graph
-
+CN$param
 }
 \references{
 Cate RB, Nelson LA. 1971. A simple statistical procedure for partitioning soil test correlation data into two classes. Soil. Sci. Soc. Amer. Proc. 35: 658-660.
