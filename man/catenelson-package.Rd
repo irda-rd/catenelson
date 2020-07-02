@@ -26,6 +26,7 @@ Cate RB, Nelson LA. 1971. A simple statistical procedure for partitioning soil t
 \seealso{
 Useful links:
 \itemize{
+  \item \url{https://github.com/irda-rd/catenelson}
   \item \url{https://www.irda.qc.ca/en/}
 }
 
