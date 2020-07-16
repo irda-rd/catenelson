@@ -111,9 +111,10 @@ cate_nelson <- function(x, y, label = NULL,
   object <- list()
   ##Details
   if(details){
-    index <- seq_len(round(details_prop * nrow(cn_x$df)))
-    object$x_partition <- cn_x$df[index,]
-    object$y_partition <- cn_y$df[index,]
+    index_x <- seq_len(round(details_prop * nrow(cn_x$df)))
+    object$x_partition <- cn_x$df[index_x,]
+    index_y <- seq_len(round(details_prop * nrow(cn_y$df)))
+    object$y_partition <- cn_y$df[index_y,]
   }else{
     object$x_partition <- NULL
     object$y_partition <- NULL
