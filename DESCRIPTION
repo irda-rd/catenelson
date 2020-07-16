@@ -1,7 +1,7 @@
 Package: catenelson
 Type: Package
 Title: Cate-Nelson Analysis
-Version: 1.1.2
+Version: 1.2
 Authors@R: c(person("Alexandre", "Leblanc", role = c("aut", "cre"), email = "alexandre.leblanc@irda.qc.ca"),
               person("Christine", "Landry", role = "rth", email = "christine.landry@irda.qc.ca"),
               person("Salvatore", "Mangiafico", role = "ctb", comment = "creator of the rcompanion package, from which the analysis approach and some code behaviour were used in this package"),
