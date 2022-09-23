@@ -6,7 +6,7 @@ Authors@R: c(person("Alexandre", "Leblanc", role = c("aut", "cre"), email = "ale
               person("Christine", "Landry", role = "rth", email = "christine.landry@irda.qc.ca"),
               person("Salvatore", "Mangiafico", role = "ctb", comment = "creator of the rcompanion package, from which the analysis approach and some code behaviour were used in this package"),
               person("Research and development institute for agri-environment (IRDA)", role = "cph"))
-Description: The package allows to perform a Cate-Nelson analysis, developped to partition a set of concentrations of a particular soil nutrient, on the basis of yield. The package extend the function cateNelson from the rcompanion package.
+Description: The package allows to perform a Cate-Nelson analysis, developped to partition a set of concentrations of a particular soil nutrient, on the basis of yield. The package extend the function cateNelson from the rcompanion package. This work was supported by Ministère de l'Agriculture, des Pêcheries et de l'Alimentation du Québec (MAPAQ).
 License: GPL-3
 Copyright: Research and development institute for agri-environment (IRDA)
 URL: https://github.com/irda-rd/catenelson, https://www.irda.qc.ca/en/
